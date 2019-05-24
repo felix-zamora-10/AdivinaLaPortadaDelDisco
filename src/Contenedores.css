@@ -1,0 +1,84 @@
+.Encabezado {
+    font-family: Arial;
+    color: white;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: #638C99;
+}
+
+.Encabezado h1 {
+    text-align: center;
+    margin: 0px;
+}
+
+.Encabezado h3 {
+    font-style: italic;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.ImagenPrincipal {
+    position: absolute;
+    left: 0;
+    width: 40%;
+    height: 87%;
+    min-width: 200px;
+}
+
+.ImagenPrincipal img{
+    max-width:100%; 
+    height:50%; 
+    margin: 15% 3% 0%;
+}
+
+.InformacionDerecha {
+    position: absolute;
+    right: 0;
+    width: 60%;
+    height: 87%;
+    min-width: 300px;
+    color: white;
+}
+
+.InformacionDerecha li {
+    margin-top: 50px;
+    font-family: arial;
+    font-size: 20px;
+    list-style-type: none;
+}
+
+.InformacionDerecha li:hover {
+    font-style: italic;
+    font-size: 25px;
+}
+
+.PieDePagina {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background: #638C99;
+    color: white;
+    font-weight: bold;
+}
+
+.boton {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    opacity: 0.6;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 25%;
+  }
+  
+  .boton:hover {opacity: 1}

@@ -60,3 +60,16 @@
   }
   
   .button:hover {opacity: 1}
+
+  .sweet-loading{
+    margin-top: 20px;
+  }
+
+  .sweet-loading p{
+      color: #B8C4CC;
+      font-family: Arial;
+      font-size: 25px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 130px;
+  }

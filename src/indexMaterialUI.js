@@ -5,6 +5,7 @@ import { PieDePagina } from "./ComponentsMaterialUI/PieDePagina";
 import { Encabezado } from "./ComponentsMaterialUI/Encabezado";
 import { Contenedor } from "./ComponentsMaterialUI/Contenedor";
 import { Categorias } from "./ComponentsMaterialUI/Categorias";
+import { Cargando } from "./ComponentsMaterialUI/Cargando";
 import Grid from '@material-ui/core/Grid';
 import store from './Store/ConfiguracionStore';
 
@@ -22,15 +23,18 @@ class IndexMaterialUI extends React.Component {
       }).then((response) => {
         store.dispatch({
           type: 'ComenzarAplicacion',
-          payload: response
+          payload: response,
+          loading: false
         })
       })
       .catch(error => console.log(error)); 
   }
-//{foo.length > 1 ? <Categorias CategoriasDisponibles = {foo}></Categorias>: null}
+
   render() {
     let categorias = store.getState().Categorias;
     let tabSeleccionado = store.getState().TabSeleccionada;
+    let estaCargando = store.getState().Cargando;
+ 
     return (
       <div>
         <Grid container spacing={0}>
@@ -38,10 +42,10 @@ class IndexMaterialUI extends React.Component {
             <Encabezado></Encabezado>
           </Grid>
           <Grid item xs={12}>
-            <Contenedor></Contenedor>
+            {estaCargando ? <Cargando></Cargando> : <Contenedor></Contenedor>}
           </Grid>
           <Grid item xs={12}>
-            <Categorias CategoriasDisponibles = {categorias} TabElegido = {tabSeleccionado} ></Categorias>
+            {estaCargando ? null : <Categorias CategoriasDisponibles = {categorias} TabElegido = {tabSeleccionado} ></Categorias>}
           </Grid>
           <Grid item xs={12}>
             <PieDePagina></PieDePagina>

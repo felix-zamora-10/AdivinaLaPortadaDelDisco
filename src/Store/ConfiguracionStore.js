@@ -32,7 +32,8 @@ var defaultState = {
     TabSeleccionada: 0,
     Categorias: ObtengaCategorias([]),
     PortadaPorCategoriaFiltrada: FiltraLaCategoria(0, []),
-    Puntos: 0
+    Puntos: 0,
+    Cargando: true
 }
 
 function FiltraLaCategoria(category, portadas) {
@@ -88,7 +89,8 @@ function PageReducer(state = defaultState, action) {
                 TabSeleccionada: 0,
                 Categorias: ObtengaCategorias(portadasObtenidas),
                 PortadaPorCategoriaFiltrada: FiltraLaCategoria(0, portadasObtenidas),
-                Puntos: 0
+                Puntos: 0,
+                Cargando: action.loading
             };
         case 'GenerarPregunta':
             return {

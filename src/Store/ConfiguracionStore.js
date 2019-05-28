@@ -1,13 +1,13 @@
 import { createStore } from 'redux';
-import { portadas } from '../VariablesGlobales';
+// import { portadas } from '../VariablesGlobales';
 
 //Para redux
 // var defaultState = {
 //     PortadaFiltrada: [
-//         {nombre: 'Respuesta', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true},
-//         {nombre: 'Respuesta', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true},
-//         {nombre: 'Respuesta', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true},
-//         {nombre: 'Respuesta', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true}
+//         {nombre: 'Respuesta1', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true},
+//         {nombre: 'Respuesta2', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true},
+//         {nombre: 'Respuesta3', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true},
+//         {nombre: 'Respuesta4', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true}
 //     ],
 //     Color: '#B3AD5F',
 //     Imagen: '/Imagenes/Logo.jpg',
@@ -18,23 +18,24 @@ import { portadas } from '../VariablesGlobales';
 
 var defaultState = {
     PortadaFiltrada: [
-        { nombre: 'Respuesta', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true },
-        { nombre: 'Respuesta', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true },
-        { nombre: 'Respuesta', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true },
-        { nombre: 'Respuesta', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true }
+        { nombre: 'Respuesta1', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true },
+        { nombre: 'Respuesta2', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true },
+        { nombre: 'Respuesta3', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true },
+        { nombre: 'Respuesta4', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true }
     ],
     Color: '#FFFFE6',
+    ColorImagen: '#FFFFE6',
     Imagen: '/Imagenes/Logo.jpg',
     Mostrar: 'visible',
     TextoBoton: 'Empezar',
     MostrarLi: 'hidden',
     TabSeleccionada: 0,
-    Categorias: ObtengaCategorias(),
-    PortadaPorCategoriaFiltrada: FiltraLaCategoria(0),
+    Categorias: ObtengaCategorias([]),
+    PortadaPorCategoriaFiltrada: FiltraLaCategoria(0, []),
     Puntos: 0
 }
 
-function FiltraLaCategoria(category) {
+function FiltraLaCategoria(category, portadas) {
     const portadasPorCategoria = [];
 
     if (category === 0) {
@@ -49,7 +50,7 @@ function FiltraLaCategoria(category) {
     }
 }
 
-function ObtengaCategorias() {
+function ObtengaCategorias(portadas) {
     const categorias = [{ Categoria: "Todas", Indice: 0 }];
 
     for (var indice = 0; indice < portadas.length; indice++) {
@@ -73,8 +74,22 @@ function SeIngresoLaCategoria(categoriasExistentes, nombre) {
     return existe;
 }
 
-function ColorReducer(state = defaultState, action) {
+function PageReducer(state = defaultState, action) {
     switch (action.type) {
+        case 'ComenzarAplicacion':
+            portadasObtenidas = action.payload;
+            return {
+                ...state,
+                Color: '#FFFFE6',
+                Imagen: '/Imagenes/Logo.jpg',
+                Mostrar: 'visible',
+                TextoBoton: 'Empezar',
+                MostrarLi: 'hidden',
+                TabSeleccionada: 0,
+                Categorias: ObtengaCategorias(portadasObtenidas),
+                PortadaPorCategoriaFiltrada: FiltraLaCategoria(0, portadasObtenidas),
+                Puntos: 0
+            };
         case 'GenerarPregunta':
             return {
                 ...state,
@@ -101,7 +116,8 @@ function ColorReducer(state = defaultState, action) {
                 TextoBoton: 'Empezar',
                 MostrarLi: 'hidden',
                 TabSeleccionada: 0,
-                PortadaPorCategoriaFiltrada: FiltraLaCategoria(0),
+                Categorias: ObtengaCategorias(portadasObtenidas),
+                PortadaPorCategoriaFiltrada: FiltraLaCategoria(0, portadasObtenidas),
                 Puntos: 0
             };
         case 'CambiarCategoria':
@@ -113,11 +129,12 @@ function ColorReducer(state = defaultState, action) {
                 Mostrar: 'visible',
                 TextoBoton: 'Empezar',
                 MostrarLi: 'hidden',
-                PortadaPorCategoriaFiltrada: FiltraLaCategoria(action.data)
+                PortadaPorCategoriaFiltrada: FiltraLaCategoria(action.data, portadasObtenidas)
             };
         default:
             return state
     }
 }
-const store = createStore(ColorReducer)
+const store = createStore(PageReducer);
+let portadasObtenidas;
 export default store;

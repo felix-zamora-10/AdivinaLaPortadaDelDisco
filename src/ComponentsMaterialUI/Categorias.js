@@ -6,12 +6,6 @@ import store from '../Store/ConfiguracionStore';
 
 export class Categorias extends React.Component {
 
-    componentDidMount() {
-        store.subscribe(() => {
-            this.setState({});
-        })
-    }
-
     CambiaElTab(value) {
         store.dispatch({
             type: 'CambiarCategoria',
@@ -22,9 +16,9 @@ export class Categorias extends React.Component {
     render() {
         return (
             <Paper>
-                <Tabs value={store.getState().TabSeleccionada} onChange={(event, value) => this.CambiaElTab(value)} 
+                <Tabs value={this.props.TabElegido} onChange={(event, value) => this.CambiaElTab(value)} 
                 indicatorColor="primary" textColor="primary" centered >
-                    {store.getState().Categorias.map((categoria) => <Tab label={categoria.Categoria} />)}
+                    {this.props.CategoriasDisponibles.map((categoria) => <Tab key={categoria.Categoria} label={categoria.Categoria} />)}
                 </Tabs>
             </Paper>
         );

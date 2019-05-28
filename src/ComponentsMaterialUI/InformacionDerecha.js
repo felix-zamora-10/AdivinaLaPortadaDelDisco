@@ -5,18 +5,12 @@ import ListItem from '@material-ui/core/ListItem';
 
 export class InformacionDerecha extends React.Component {
 
-    componentDidMount() {
-        store.subscribe(() => {
-            this.setState({});
-        })
-    }
-
     ObtengaSetDePreguntas() {
         var portadaFiltrada = [];
         var indicesEscogidos = [];
         var indice;
         var salidaDeCiclo = 4;
-        console.log(store.getState().PortadaPorCategoriaFiltrada);
+        
         for (var index = 0; index < store.getState().PortadaPorCategoriaFiltrada.length; index++) {
             store.getState().PortadaPorCategoriaFiltrada[index].respuestaCorrecta = false;
         }
@@ -77,17 +71,17 @@ export class InformacionDerecha extends React.Component {
     }
 
     render() {
-        return (<div className="RightInfo" style={{ backgroundColor: store.getState().Color }} >
-            <h4>Puntos totales = {store.getState().Puntos}</h4>
+        return (<div className="RightInfo" style={{ backgroundColor: this.props.Propiedades.color }} >
+            <h4>Puntos totales = {this.props.Propiedades.puntos}</h4>
             <List component="nav">
-                {store.getState().PortadaFiltrada.map((portadaFiltrada) =>
-                    <ListItem button onClick={() => this.CambiaColorSegunRespuesta(portadaFiltrada)}
-                        style={{ visibility: store.getState().MostrarLi }} >{portadaFiltrada.nombre}</ListItem>)}
+                {this.props.Propiedades.portadaFiltrada.map((portadaFiltrada) =>
+                    <ListItem key={portadaFiltrada.nombre} button onClick={() => this.CambiaColorSegunRespuesta(portadaFiltrada)}
+                        style={{ visibility: this.props.Propiedades.mostrarLi }} >{portadaFiltrada.nombre}</ListItem>)}
             </List>
             <br />
             <br />
-            <button className="button" style={{ visibility: store.getState().Mostrar }}
-                onClick={this.ObtengaSetDePreguntas}>{store.getState().TextoBoton}</button>
+            <button className="button" style={{ visibility: this.props.Propiedades.mostrarBtn }}
+                onClick={this.ObtengaSetDePreguntas}>{this.props.Propiedades.textoBtn}</button>
             <button className="button" onClick={this.ReinicieElJuego}>Reiniciar</button>
         </div>);
     }

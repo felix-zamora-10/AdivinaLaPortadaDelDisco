@@ -2,6 +2,7 @@ import React from 'react';
 import store from '../Store/ConfiguracionStore';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import { GenerarPregunta, CambiarColor, ReiniciarJuego } from '../Store/Actions';
 
 export class InformacionDerecha extends React.Component {
 
@@ -32,13 +33,7 @@ export class InformacionDerecha extends React.Component {
         var imagen = '';
         imagen = portadaFiltrada[respuestaCorrecta].foto;
 
-        store.dispatch({
-            type: 'GenerarPregunta',
-            data: portadaFiltrada,
-            img: imagen,
-            shw: 'hidden',
-            mstrLi: 'visible'
-        })
+        store.dispatch(GenerarPregunta(portadaFiltrada, imagen))
     }
 
     CambiaColorSegunRespuesta(elemento) {
@@ -55,19 +50,11 @@ export class InformacionDerecha extends React.Component {
             puntosActuales -= 10;
         }
 
-        store.dispatch({
-            type: 'CambiarColor',
-            data: colorFinal,
-            shw: mostrar,
-            txtBtn: 'Siguiente',
-            points: puntosActuales
-        })
+        store.dispatch(CambiarColor(colorFinal, mostrar, puntosActuales))
     }
 
     ReinicieElJuego() {
-        store.dispatch({
-            type: 'ReiniciarJuego'
-        })
+        store.dispatch(ReiniciarJuego())
     }
 
     render() {

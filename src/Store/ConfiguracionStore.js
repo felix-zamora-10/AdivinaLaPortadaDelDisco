@@ -98,15 +98,15 @@ function PageReducer(state = defaultState, action) {
                 PortadaFiltrada: action.data,
                 Color: '#FFFFE6',
                 Imagen: action.img,
-                Mostrar: action.shw,
-                MostrarLi: action.mstrLi
+                Mostrar: 'hidden',
+                MostrarLi: 'visible'
             };
         case 'CambiarColor':
             return {
                 ...state,
                 Color: action.data,
                 Mostrar: action.shw,
-                TextoBoton: action.txtBtn,
+                TextoBoton: 'Siguiente',
                 Puntos: action.points
             };
         case 'ReiniciarJuego':

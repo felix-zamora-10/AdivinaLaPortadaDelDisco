@@ -8,6 +8,7 @@ import { Categorias } from "./ComponentsMaterialUI/Categorias";
 import { Cargando } from "./ComponentsMaterialUI/Cargando";
 import Grid from '@material-ui/core/Grid';
 import store from './Store/ConfiguracionStore';
+import { ComenzarAplicacion, CambiarCategoria } from './Store/Actions';
 
 class IndexMaterialUI extends React.Component {
 
@@ -21,19 +22,17 @@ class IndexMaterialUI extends React.Component {
       .then((res) => {
         return res.json();
       }).then((response) => {
-        store.dispatch({
-          type: 'ComenzarAplicacion',
-          payload: response,
-          loading: false
-        })
+        store.dispatch(ComenzarAplicacion(response));
+        store.dispatch(CambiarCategoria(0));
       })
-      .catch(error => console.log(error)); 
+      .catch(error => console.log(error));
   }
 
   render() {
-    let categorias = store.getState().Categorias;
-    let tabSeleccionado = store.getState().TabSeleccionada;
-    let estaCargando = store.getState().Cargando;
+    console.log(store.getState());
+    let categorias = store.getState().CategoriasReducer.Categorias;
+    let tabSeleccionado = store.getState().CategoriasReducer.TabSeleccionada;
+    let estaCargando = store.getState().CicloDelJuegoReducer.Cargando;
  
     return (
       <div>

@@ -2,7 +2,7 @@ import React from 'react';
 import store from '../Store/ConfiguracionStore';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { GenerarPregunta, CambiarColor, ReiniciarJuego } from '../Store/Actions';
+import { GenerarPregunta, CambiarColor, ReiniciarJuego, CambiarCategoria } from '../Store/Actions';
 
 export class InformacionDerecha extends React.Component {
 
@@ -12,16 +12,16 @@ export class InformacionDerecha extends React.Component {
         var indice;
         var salidaDeCiclo = 4;
         
-        for (var index = 0; index < store.getState().PortadaPorCategoriaFiltrada.length; index++) {
-            store.getState().PortadaPorCategoriaFiltrada[index].respuestaCorrecta = false;
+        for (var index = 0; index < store.getState().CategoriasReducer.PortadaPorCategoriaFiltrada.length; index++) {
+            store.getState().CategoriasReducer.PortadaPorCategoriaFiltrada[index].respuestaCorrecta = false;
         }
 
         for (var contador = 0; contador < salidaDeCiclo; contador++) {
-            indice = Math.floor((Math.random() * store.getState().PortadaPorCategoriaFiltrada.length) + 0);
+            indice = Math.floor((Math.random() * store.getState().CategoriasReducer.PortadaPorCategoriaFiltrada.length) + 0);
 
             if (!indicesEscogidos.includes(indice)) {
                 indicesEscogidos.push(indice);
-                portadaFiltrada.push(store.getState().PortadaPorCategoriaFiltrada[indice]);
+                portadaFiltrada.push(store.getState().CategoriasReducer.PortadaPorCategoriaFiltrada[indice]);
             } else {
                 contador--;
             }
@@ -39,7 +39,7 @@ export class InformacionDerecha extends React.Component {
     CambiaColorSegunRespuesta(elemento) {
         var colorFinal = '';
         var mostrar = 'hidden';
-        var puntosActuales = store.getState().Puntos
+        var puntosActuales = store.getState().ContestarPreguntasReducer.Puntos
 
         if (elemento.respuestaCorrecta) {
             colorFinal = '#B9FAC2';
@@ -55,6 +55,7 @@ export class InformacionDerecha extends React.Component {
 
     ReinicieElJuego() {
         store.dispatch(ReiniciarJuego())
+        store.dispatch(CambiarCategoria(0))
     }
 
     render() {

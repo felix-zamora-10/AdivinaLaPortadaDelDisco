@@ -1,22 +1,12 @@
-import { createStore } from 'redux';
-// import { portadas } from '../VariablesGlobales';
+import { createStore, combineReducers } from 'redux';
+import { COMENZAR_APLICACION, GENERAR_PREGUNTA, CAMBIAR_COLOR, REINICIAR_JUEGO, CAMBIAR_CATEGORIA } from './Actions';
 
-//Para redux
-// var defaultState = {
-//     PortadaFiltrada: [
-//         {nombre: 'Respuesta1', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true},
-//         {nombre: 'Respuesta2', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true},
-//         {nombre: 'Respuesta3', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true},
-//         {nombre: 'Respuesta4', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true}
-//     ],
-//     Color: '#B3AD5F',
-//     Imagen: '/Imagenes/Logo.jpg',
-//     Mostrar: 'block',
-//     TextoBoton: 'Empezar',
-//     MostrarLi: 'hidden'
-// }
+const cicloDelJuegoDefaultState = {
+    ColorImagen: '#FFFFE6',
+    Cargando: true
+}
 
-var defaultState = {
+const contestarPreguntasDefaultState = {
     PortadaFiltrada: [
         { nombre: 'Respuesta1', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true },
         { nombre: 'Respuesta2', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true },
@@ -24,16 +14,17 @@ var defaultState = {
         { nombre: 'Respuesta4', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true }
     ],
     Color: '#FFFFE6',
-    ColorImagen: '#FFFFE6',
     Imagen: '/Imagenes/Logo.jpg',
     Mostrar: 'visible',
-    TextoBoton: 'Empezar',
     MostrarLi: 'hidden',
+    TextoBoton: 'Empezar',
+    Puntos: 0,
+}
+
+const categoriasDefaultState = {
     TabSeleccionada: 0,
     Categorias: ObtengaCategorias([]),
-    PortadaPorCategoriaFiltrada: FiltraLaCategoria(0, []),
-    Puntos: 0,
-    Cargando: true
+    PortadaPorCategoriaFiltrada: FiltraLaCategoria(0, [])
 }
 
 function FiltraLaCategoria(category, portadas) {
@@ -75,33 +66,47 @@ function SeIngresoLaCategoria(categoriasExistentes, nombre) {
     return existe;
 }
 
-function PageReducer(state = defaultState, action) {
+function CicloDelJuegoReducer(state = cicloDelJuegoDefaultState, action) {
     switch (action.type) {
-        case 'ComenzarAplicacion':
-            portadasObtenidas = action.payload;
+        case COMENZAR_APLICACION:
+            portadasObtenidas = action.data;
             return {
                 ...state,
+                Cargando: false
+            };
+        default:
+            return state
+    }
+}
+
+function ContestarPreguntasReducer(state = contestarPreguntasDefaultState, action) {
+    switch (action.type) {
+        case REINICIAR_JUEGO:
+            return {
+                ...state,
+                PortadaFiltrada: [
+                    { nombre: 'Respuesta1', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true },
+                    { nombre: 'Respuesta2', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true },
+                    { nombre: 'Respuesta3', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true },
+                    { nombre: 'Respuesta4', foto: '/Imagenes/Logo.jpg', respuestaCorrecta: true }
+                ],
                 Color: '#FFFFE6',
                 Imagen: '/Imagenes/Logo.jpg',
                 Mostrar: 'visible',
-                TextoBoton: 'Empezar',
                 MostrarLi: 'hidden',
-                TabSeleccionada: 0,
-                Categorias: ObtengaCategorias(portadasObtenidas),
-                PortadaPorCategoriaFiltrada: FiltraLaCategoria(0, portadasObtenidas),
+                TextoBoton: 'Empezar',
                 Puntos: 0,
-                Cargando: action.loading
             };
-        case 'GenerarPregunta':
+        case GENERAR_PREGUNTA:
             return {
                 ...state,
                 PortadaFiltrada: action.data,
                 Color: '#FFFFE6',
                 Imagen: action.img,
                 Mostrar: 'hidden',
-                MostrarLi: 'visible'
+                MostrarLi: 'visible',
             };
-        case 'CambiarColor':
+        case CAMBIAR_COLOR:
             return {
                 ...state,
                 Color: action.data,
@@ -109,34 +114,31 @@ function PageReducer(state = defaultState, action) {
                 TextoBoton: 'Siguiente',
                 Puntos: action.points
             };
-        case 'ReiniciarJuego':
-            return {
-                ...state,
-                Color: '#FFFFE6',
-                Imagen: '/Imagenes/Logo.jpg',
-                Mostrar: 'visible',
-                TextoBoton: 'Empezar',
-                MostrarLi: 'hidden',
-                TabSeleccionada: 0,
-                Categorias: ObtengaCategorias(portadasObtenidas),
-                PortadaPorCategoriaFiltrada: FiltraLaCategoria(0, portadasObtenidas),
-                Puntos: 0
-            };
-        case 'CambiarCategoria':
+        default:
+            return state
+    }
+}
+
+function CategoriasReducer(state = categoriasDefaultState, action) {
+    switch (action.type) {
+        case CAMBIAR_CATEGORIA:
             return {
                 ...state,
                 TabSeleccionada: action.data,
-                Color: '#FFFFE6',
-                Imagen: '/Imagenes/Logo.jpg',
-                Mostrar: 'visible',
-                TextoBoton: 'Empezar',
-                MostrarLi: 'hidden',
+                Categorias: ObtengaCategorias(portadasObtenidas),
                 PortadaPorCategoriaFiltrada: FiltraLaCategoria(action.data, portadasObtenidas)
             };
         default:
             return state
     }
 }
-const store = createStore(PageReducer);
+
+const pageReducer = combineReducers({
+    CicloDelJuegoReducer,
+    ContestarPreguntasReducer,
+    CategoriasReducer
+})
+
+const store = createStore(pageReducer);
 let portadasObtenidas;
 export default store;

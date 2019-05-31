@@ -8,16 +8,16 @@ export class Contenedor extends React.Component {
 
   render() {
     let imgPrincipal = {
-      colorInicial: store.getState().ColorImagen,
-      imagenInicial: store.getState().Imagen
+      colorInicial: store.getState().CicloDelJuegoReducer.ColorImagen,
+      imagenInicial: store.getState().ContestarPreguntasReducer.Imagen
     }
     let infoDerecha = {
-      color: store.getState().Color,
-      puntos: store.getState().Puntos,
-      portadaFiltrada: store.getState().PortadaFiltrada,
-      mostrarLi: store.getState().MostrarLi,
-      mostrarBtn: store.getState().Mostrar,
-      textoBtn: store.getState().TextoBoton
+      color: store.getState().ContestarPreguntasReducer.Color,
+      puntos: store.getState().ContestarPreguntasReducer.Puntos,
+      portadaFiltrada: store.getState().ContestarPreguntasReducer.PortadaFiltrada,
+      mostrarLi: store.getState().ContestarPreguntasReducer.MostrarLi,
+      mostrarBtn: store.getState().ContestarPreguntasReducer.Mostrar,
+      textoBtn: store.getState().ContestarPreguntasReducer.TextoBoton
     }
     return (
       <div>

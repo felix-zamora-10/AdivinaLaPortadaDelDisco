@@ -7,7 +7,7 @@ import { Contenedor } from "./ComponentsMaterialUI/Contenedor";
 import { Categorias } from "./ComponentsMaterialUI/Categorias";
 import { Cargando } from "./ComponentsMaterialUI/Cargando";
 import Grid from '@material-ui/core/Grid';
-import store from './Store/ConfiguracionStore';
+import store from './Store/Store';
 import { ComenzarAplicacion, CambiarCategoria } from './Store/Actions';
 
 class IndexMaterialUI extends React.Component {

@@ -1,5 +1,5 @@
 import React from 'react';
-import store from '../Store/ConfiguracionStore';
+import store from '../Store/Store';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { GenerarPregunta, CambiarColor, ReiniciarJuego, CambiarCategoria } from '../Store/Actions';

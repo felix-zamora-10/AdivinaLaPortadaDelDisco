@@ -2,7 +2,7 @@ import React from 'react';
 import { InformacionDerecha } from './InformacionDerecha';
 import { ImagenPrincipal } from './ImagenPrincipal';
 import Grid from '@material-ui/core/Grid';
-import store from '../Store/ConfiguracionStore';
+import store from '../Store/Store';
 
 export class Contenedor extends React.Component {
 

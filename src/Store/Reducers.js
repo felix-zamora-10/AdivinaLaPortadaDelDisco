@@ -1,4 +1,4 @@
-import { createStore, combineReducers } from 'redux';
+import { combineReducers } from 'redux';
 import { COMENZAR_APLICACION, GENERAR_PREGUNTA, CAMBIAR_COLOR, REINICIAR_JUEGO, CAMBIAR_CATEGORIA } from './Actions';
 
 const cicloDelJuegoDefaultState = {
@@ -139,6 +139,6 @@ const pageReducer = combineReducers({
     CategoriasReducer
 })
 
-const store = createStore(pageReducer);
 let portadasObtenidas;
-export default store;
+
+export default pageReducer;

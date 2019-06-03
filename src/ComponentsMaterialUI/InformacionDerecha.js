@@ -38,19 +38,18 @@ export class InformacionDerecha extends React.Component {
 
     CambiaColorSegunRespuesta(elemento) {
         var colorFinal = '';
-        var mostrar = 'hidden';
         var puntosActuales = store.getState().ContestarPreguntasReducer.Puntos
+        var puntosRestantes = store.getState().ContestarPreguntasReducer.PreguntasRestantes
 
         if (elemento.respuestaCorrecta) {
-            colorFinal = '#B9FAC2';
-            mostrar = 'visible'; //Verde
+            colorFinal = '#B9FAC2'; //Verde
             puntosActuales += 10;
         } else {
             colorFinal = '#FA5C56'; //Rojo
-            puntosActuales -= 10;
         }
 
-        store.dispatch(CambiarColor(colorFinal, mostrar, puntosActuales))
+        puntosRestantes -= 1;
+        store.dispatch(CambiarColor(colorFinal, puntosActuales, puntosRestantes))
     }
 
     ReinicieElJuego() {
@@ -64,7 +63,8 @@ export class InformacionDerecha extends React.Component {
             <List component="nav">
                 {this.props.Propiedades.portadaFiltrada.map((portadaFiltrada) =>
                     <ListItem key={portadaFiltrada.nombre} button onClick={() => this.CambiaColorSegunRespuesta(portadaFiltrada)}
-                        style={{ visibility: this.props.Propiedades.mostrarLi }} >{portadaFiltrada.nombre}</ListItem>)}
+                        style={{ visibility: this.props.Propiedades.mostrarLi, pointerEvents: this.props.Propiedades.habilitarEvento }} >
+                        {portadaFiltrada.nombre}</ListItem>)}
             </List>
             <br />
             <br />

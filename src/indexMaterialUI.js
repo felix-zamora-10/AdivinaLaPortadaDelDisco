@@ -29,7 +29,6 @@ class IndexMaterialUI extends React.Component {
   }
 
   render() {
-    console.log(store.getState());
     let categorias = store.getState().CategoriasReducer.Categorias;
     let tabSeleccionado = store.getState().CategoriasReducer.TabSeleccionada;
     let estaCargando = store.getState().CicloDelJuegoReducer.Cargando;

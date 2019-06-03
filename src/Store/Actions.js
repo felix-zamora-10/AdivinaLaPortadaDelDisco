@@ -19,12 +19,12 @@ export function GenerarPregunta(portadaFiltrada, imagen) {
     }
 }
 
-export function CambiarColor(colorFinal, mostrar, puntosActuales) {
+export function CambiarColor(colorFinal, puntosActuales, preguntasRestantes) {
     return {
         type: CAMBIAR_COLOR,
         data: colorFinal,
-        shw: mostrar,
-        points: puntosActuales
+        points: puntosActuales,
+        remainingQuestions: preguntasRestantes
     }
 }
 

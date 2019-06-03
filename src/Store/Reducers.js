@@ -19,6 +19,8 @@ const contestarPreguntasDefaultState = {
     MostrarLi: 'hidden',
     TextoBoton: 'Empezar',
     Puntos: 0,
+    HabilitaEvento: 'none',
+    PreguntasRestantes: 10
 }
 
 const categoriasDefaultState = {
@@ -96,6 +98,8 @@ function ContestarPreguntasReducer(state = contestarPreguntasDefaultState, actio
                 MostrarLi: 'hidden',
                 TextoBoton: 'Empezar',
                 Puntos: 0,
+                HabilitaEvento: 'none',
+                PreguntasRestantes: 10
             };
         case GENERAR_PREGUNTA:
             return {
@@ -105,14 +109,17 @@ function ContestarPreguntasReducer(state = contestarPreguntasDefaultState, actio
                 Imagen: action.img,
                 Mostrar: 'hidden',
                 MostrarLi: 'visible',
+                HabilitaEvento: 'auto'
             };
         case CAMBIAR_COLOR:
             return {
                 ...state,
                 Color: action.data,
-                Mostrar: action.shw,
+                Mostrar: 'visible',
                 TextoBoton: 'Siguiente',
-                Puntos: action.points
+                Puntos: action.points,
+                HabilitaEvento: 'none',
+                PreguntasRestantes: action.remainingQuestions
             };
         default:
             return state
